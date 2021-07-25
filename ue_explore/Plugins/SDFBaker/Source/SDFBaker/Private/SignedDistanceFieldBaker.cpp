@@ -6,6 +6,8 @@
 #include "Math/Box.h"
 #include "StaticMeshResources.h"
 #include "Rendering/PositionVertexBuffer.h"
+#include "Engine/VolumeTexture.h"
+#include "SignedDistanceFieldCommon.h"
 
 ASignedDistanceFieldBaker::ASignedDistanceFieldBaker()
 {
@@ -70,6 +72,10 @@ void ASignedDistanceFieldBaker::VisualizeVolume()
 		size.Y / this->VolumeTextureSize.Y, 
 		size.Z / this->VolumeTextureSize.Z);
 
+	// float[][][] volumeTexture;
+	// spr1ngd : how to create volume texture in c++
+	// link : AssetTypeActions_Texture2D.cpp line : 138
+
 	for (float z = 0.0f; z < size.Z; z += voxelSize.Z) {
 		for (float y = 0.0f; y < size.Y; y += voxelSize.Y) {
 			for (float x = 0.0f; x < size.X; x += voxelSize.X) {
@@ -80,7 +86,8 @@ void ASignedDistanceFieldBaker::VisualizeVolume()
 				if (this->DrawDebugInfo)
 					DrawDebugBox(world, voxelCenter, voxelExtent, FQuat::Identity, FColor::Red, false, 0.0f, 0, this->DebugLineWidth);
 
-
+				float minT = this->CalcSDF(voxelCenter, vertices);
+				// volumeTexture[x][y][z] = minT;
 			}
 		}
 	}
@@ -91,9 +98,14 @@ void ASignedDistanceFieldBaker::VisualizeVolumeVoxel()
 
 }
 
-void ASignedDistanceFieldBaker::CalcSDF(TArray<FVertex> vertices)
+float ASignedDistanceFieldBaker::CalcSDF(FVector o, TArray<FVertex> vertices)
 {
-
+	float minT = 99999999.9f;
+	for (int32 i = 0; i < vertices.Num(); i++) {
+		FVertex vertex = vertices[i];
+		minT = FMath::Min(minT,FVector::Distance(vertex.Position,o));
+	}
+	return minT;
 }
 
 void ASignedDistanceFieldBaker::CalcSDF(TArray<FTriangle> triangles)
@@ -105,9 +117,9 @@ void ASignedDistanceFieldBaker::ExtractMeshInfo(UStaticMesh* staticMesh, TArray<
 {
 	if (nullptr == staticMesh && staticMesh->RenderData->LODResources.Num() <= 0)
 		return;
-	FStaticMeshLODResources res = staticMesh->RenderData->LODResources[0];
-	FStaticMeshVertexBuffers vbo = res.VertexBuffers;
-	FPositionVertexBuffer* vertexBuffer = &vbo.PositionVertexBuffer;
+	FStaticMeshLODResources* res = &staticMesh->RenderData->LODResources[0];
+	FStaticMeshVertexBuffers* vbo = &res->VertexBuffers;
+	FPositionVertexBuffer* vertexBuffer = &vbo->PositionVertexBuffer;
 	if (vertexBuffer) {
 		int32 num = vertexBuffer->GetNumVertices();
 		for (int32 index = 0; index < num; index++) {
@@ -115,6 +127,6 @@ void ASignedDistanceFieldBaker::ExtractMeshInfo(UStaticMesh* staticMesh, TArray<
 			vertices.Add(FVertex(positionOS));
 		}
 	}
-	FRawStaticIndexBuffer ibo = res.IndexBuffer;
+	FRawStaticIndexBuffer* ibo = &res->IndexBuffer;
 	// get triangle data
 }

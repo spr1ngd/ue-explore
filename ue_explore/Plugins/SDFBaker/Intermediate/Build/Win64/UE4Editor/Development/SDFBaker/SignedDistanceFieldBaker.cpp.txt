@@ -1,0 +1,9 @@
+D:\Project Files\Unreal\ue_explore\ue_explore\Plugins\SDFBaker\Intermediate\Build\Win64\UE4Editor\Development\SDFBaker\Definitions.SDFBaker.h
+D:\Project Files\Unreal\ue_explore\ue_explore\Plugins\SDFBaker\Source\SDFBaker\Public\SignedDistanceFieldBaker.h
+D:\Project Files\UnrealEngine\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/StaticMeshActor.h
+D:\Project Files\UnrealEngine\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\StaticMeshActor.generated.h
+D:\Project Files\Unreal\ue_explore\ue_explore\Plugins\SDFBaker\Intermediate\Build\Win64\UE4Editor\Inc\SDFBaker\SignedDistanceFieldBaker.generated.h
+D:\Project Files\UnrealEngine\UE_4.26\Engine\Source\Runtime\Engine\Public\DrawDebugHelpers.h
+D:\Project Files\UnrealEngine\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/VolumeTexture.h
+D:\Project Files\UnrealEngine\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\VolumeTexture.generated.h
+D:\Project Files\Unreal\ue_explore\ue_explore\Plugins\SDFBaker\Source\SDFBaker\Public\SignedDistanceFieldCommon.h

@@ -11,6 +11,7 @@ public:
 	FVector Position;
 	FVector Normal;
 
+	FVertex() {}
 	FVertex(FVector pos);
 	FVertex(FVector pos,FVector normal);
 };
@@ -22,5 +23,6 @@ public:
 	FVertex B;
 	FVertex C;
 
+	FTriangle() {}
 	FTriangle(FVertex a,FVertex b,FVertex c);
 };

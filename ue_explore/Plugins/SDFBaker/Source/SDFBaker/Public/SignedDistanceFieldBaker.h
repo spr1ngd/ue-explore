@@ -46,9 +46,11 @@ public:
 
 private:
 
-	void CalcSDF(TArray<FVertex> vertices);
-	void CalcSDF(TArray<FTriangle> triangles);
+	float CalcSDF(FVector o ,TArray<class FVertex> vertices);
+	void CalcSDF(TArray<class FTriangle> triangles);
 
 	void VisualizeVolumeVoxel();
 	void ExtractMeshInfo(class UStaticMesh* staticMesh,TArray<FVertex>& vertices,TArray<FTriangle>& triangles);
+
+	// void GenVolumeTexture(float[][][] sdf);
 };
