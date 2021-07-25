@@ -72,3 +72,6 @@ Plugins/*/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+/ue_explore/Binaries/Win64
+/ue_explore/Intermediate
+/ue_explore/Saved

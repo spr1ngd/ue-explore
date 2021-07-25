@@ -1,0 +1,13 @@
+{
+	"RemapUnityFiles": 
+	{
+		"Module.SDFBaker.cpp.obj": [
+			"SDFBaker.cpp.obj",
+			"SignedDistanceFieldBaker.cpp.obj"
+		],
+		"Module.SDFBaker.gen.cpp.obj": [
+			"SDFBaker.init.gen.cpp.obj",
+			"SignedDistanceFieldBaker.gen.cpp.obj"
+		]
+	}
+}
