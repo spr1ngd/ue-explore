@@ -7,7 +7,10 @@
 #include "StaticMeshResources.h"
 #include "Rendering/PositionVertexBuffer.h"
 #include "Engine/VolumeTexture.h"
+#include "Factories/VolumeTextureFactory.h"
 #include "SignedDistanceFieldCommon.h"
+#include "AssetRegistry/AssetRegistryModule.h"
+#include "FileHelpers.h"
 
 ASignedDistanceFieldBaker::ASignedDistanceFieldBaker()
 {
@@ -24,7 +27,6 @@ void ASignedDistanceFieldBaker::Tick(float DeltaSeconds)
 	}
 	else {
 		Super::Tick(DeltaSeconds);
-		VisualizeVolume();
 	}
 }
 
@@ -60,23 +62,19 @@ void ASignedDistanceFieldBaker::VisualizeVolume()
 	FVector volumeExtent = box.GetExtent();
 	volumeExtent *= (1 + this->VolumeIncreasePercent);
 
-	if( this->DrawDebugInfo )
-		DrawDebugBox(world,volumeCenter,volumeExtent,FQuat::Identity,FColor::Green,false,0.0f,0,this->DebugLineWidth);
+	DrawDebugBox(world,volumeCenter,volumeExtent,FQuat::Identity,FColor::Green,false,0.0f,0,this->DebugLineWidth);
 
 	// visualize voxel 
 	FVector min = volumeCenter - volumeExtent;
 	FVector max = volumeCenter + volumeExtent;
 	FVector size = volumeExtent * 2.0f;
 	FVector voxelSize = FVector(
-		size.X / this->VolumeTextureSize.X,
-		size.Y / this->VolumeTextureSize.Y, 
-		size.Z / this->VolumeTextureSize.Z);
+		size.X / VolumeTextureTileX,
+		size.Y / VolumeTextureTileY,
+		size.Z / VolumeTextureTileZ);
 
-	// float[][][] volumeTexture;
-	// spr1ngd : how to create volume texture in c++
-	// link : AssetTypeActions_Texture2D.cpp line : 138
-
-	for (float z = 0.0f; z < size.Z; z += voxelSize.Z) {
+	TArray<FColor> sliceColors;
+	for (float z = size.Z; z >=0; z -= voxelSize.Z) {
 		for (float y = 0.0f; y < size.Y; y += voxelSize.Y) {
 			for (float x = 0.0f; x < size.X; x += voxelSize.X) {
 				FVector voxelMin = min + FVector(x, y, z);
@@ -85,11 +83,20 @@ void ASignedDistanceFieldBaker::VisualizeVolume()
 				FVector voxelExtent = (voxelMax - voxelMin) * 0.5f;
 				if (this->DrawDebugInfo)
 					DrawDebugBox(world, voxelCenter, voxelExtent, FQuat::Identity, FColor::Red, false, 0.0f, 0, this->DebugLineWidth);
-
 				float minT = this->CalcSDF(voxelCenter, vertices);
-				// volumeTexture[x][y][z] = minT;
+				minT /= 250;
+				FColor color = FLinearColor(minT,minT,minT).ToFColor(false);
+				sliceColors.Push(color);
 			}
 		}
+	}
+
+	if (!this->SDFVolumeTexture) {
+		// z轴在2d中纵向排列
+		UTexture2D* sourceTex = this->CreateSliceTexture(VolumeTextureTileX, VolumeTextureTileY * VolumeTextureTileZ, sliceColors);
+		UVolumeTexture* volumeTexture = this->CreateVolumeTexture(VolumeTextureTileX, VolumeTextureTileY, VolumeTextureTileZ, sourceTex);
+		this->SDFVolumeTexture = volumeTexture;
+		this->SaveVolumeTexture(volumeTexture, FString::Printf(TEXT("/Game/levels/SDF_Volume")));
 	}
 }
 
@@ -129,4 +136,84 @@ void ASignedDistanceFieldBaker::ExtractMeshInfo(UStaticMesh* staticMesh, TArray<
 	}
 	FRawStaticIndexBuffer* ibo = &res->IndexBuffer;
 	// get triangle data
+}
+
+UTexture2D* ASignedDistanceFieldBaker::CreateSliceTexture(int32 width, int32 height, TArray<FColor>& colors)
+{
+	FString sourceTexName = "SDF_SourceTexture";
+	FString packageName = "/Game/levels/SDF_SourceTexture";
+	UPackage* package = CreatePackage(NULL, *packageName);
+	package->FullyLoad();
+	UTexture2D* NewTexture = NewObject<UTexture2D>(package, *sourceTexName, RF_Public | RF_Standalone | RF_MarkAsRootSet);
+	NewTexture->Source.Init(width, height, 1, 1, TSF_BGRA8);
+
+	uint8* MipData = NewTexture->Source.LockMip(0);
+	for (int32 y = 0; y < height; y++)
+	{
+		uint8* DestPtr = &MipData[(height - 1 - y) * width * sizeof(FColor)];
+		FColor* SrcPtr = const_cast<FColor*>(&colors[(height - 1 - y) * width]);
+		for (int32 x = 0; x < width; x++)
+		{
+			*DestPtr++ = SrcPtr->B;
+			*DestPtr++ = SrcPtr->G;
+			*DestPtr++ = SrcPtr->R;
+			if (true)
+			{
+				*DestPtr++ = SrcPtr->A;
+			}
+			else
+			{
+				*DestPtr++ = 0xFF;
+			}
+			SrcPtr++;
+		}
+	}
+	NewTexture->Source.UnlockMip(0);
+	NewTexture->SRGB = false;
+	NewTexture->PostEditChange();
+
+	FAssetRegistryModule::AssetCreated(NewTexture);
+	package->MarkPackageDirty();
+	bool success = UPackage::SavePackage(package, NewTexture, EObjectFlags::RF_Public | EObjectFlags::RF_Standalone, *packageName, GError, nullptr, true, true, SAVE_NoError);
+	FEditorFileUtils::EPromptReturnCode returnCode = FEditorFileUtils::PromptForCheckoutAndSave({ package }, false, false);
+	return NewTexture;
+}
+
+UVolumeTexture* ASignedDistanceFieldBaker::CreateVolumeTexture(int32 tileX, int32 tileY, int32 tileZ, UTexture2D* sourceTex)
+{
+	check(sourceTex);
+	check(tileZ > 0);
+
+	FString volumeTexName = "SDF_VolumeTexture";
+	FString packageName = "/Game/levels/SDF_VolumeTexture";
+	UPackage* package = CreatePackage(NULL, *packageName);
+	package->FullyLoad();
+
+	UVolumeTexture* volumeTex = NewObject<UVolumeTexture>(package,"SDF_VolumeTexture", EObjectFlags::RF_Public | EObjectFlags::RF_Standalone | EObjectFlags::RF_MarkAsRootSet);
+	volumeTex->AddToRoot();
+	volumeTex->MipGenSettings = TMGS_FromTextureGroup;
+	volumeTex->NeverStream = true;
+	volumeTex->CompressionNone = false;
+
+	volumeTex->SRGB = sourceTex->SRGB;
+	const FTextureSource& Source = sourceTex->Source;
+	const int32 NumsPixels = sourceTex->PlatformData->SizeX * sourceTex->PlatformData->SizeY;
+	if (NumsPixels > 0) {
+		volumeTex->Source2DTexture = sourceTex;
+		volumeTex->Source2DTileSizeX = tileX;
+		volumeTex->Source2DTileSizeY = tileY;
+
+		volumeTex->UpdateSourceFromSourceTexture();
+		volumeTex->UpdateResource();
+	}
+
+	FAssetRegistryModule::AssetCreated(volumeTex);
+	package->MarkPackageDirty();
+	bool success = UPackage::SavePackage(package, volumeTex, EObjectFlags::RF_Public | EObjectFlags::RF_Standalone, *packageName, GError, nullptr, true, true, SAVE_NoError);
+	FEditorFileUtils::EPromptReturnCode returnCode = FEditorFileUtils::PromptForCheckoutAndSave({ package }, false, false);
+	return volumeTex;
+}
+
+void ASignedDistanceFieldBaker::SaveVolumeTexture(UVolumeTexture* volumeTexture, FString packageName)
+{
 }

@@ -17,7 +17,6 @@ void EmptyLinkFunctionForGeneratedCodeSignedDistanceFieldBaker() {}
 	SDFBAKER_API UClass* Z_Construct_UClass_ASignedDistanceFieldBaker();
 	ENGINE_API UClass* Z_Construct_UClass_AStaticMeshActor();
 	UPackage* Z_Construct_UPackage__Script_SDFBaker();
-	COREUOBJECT_API UScriptStruct* Z_Construct_UScriptStruct_FVector();
 // End Cross Module References
 	DEFINE_FUNCTION(ASignedDistanceFieldBaker::execVisualizeVolume)
 	{
@@ -93,9 +92,17 @@ void EmptyLinkFunctionForGeneratedCodeSignedDistanceFieldBaker() {}
 #endif
 		static const UE4CodeGen_Private::FFloatPropertyParams NewProp_VolumeIncreasePercent;
 #if WITH_METADATA
-		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_VolumeTextureSize_MetaData[];
+		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_VolumeTextureTileX_MetaData[];
 #endif
-		static const UE4CodeGen_Private::FStructPropertyParams NewProp_VolumeTextureSize;
+		static const UE4CodeGen_Private::FIntPropertyParams NewProp_VolumeTextureTileX;
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_VolumeTextureTileY_MetaData[];
+#endif
+		static const UE4CodeGen_Private::FIntPropertyParams NewProp_VolumeTextureTileY;
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_VolumeTextureTileZ_MetaData[];
+#endif
+		static const UE4CodeGen_Private::FIntPropertyParams NewProp_VolumeTextureTileZ;
 		static const UE4CodeGen_Private::FPropertyParamsBase* const PropPointers[];
 		static const FCppClassTypeInfoStatic StaticCppClassTypeInfo;
 		static const UE4CodeGen_Private::FClassParams ClassParams;
@@ -165,19 +172,35 @@ void EmptyLinkFunctionForGeneratedCodeSignedDistanceFieldBaker() {}
 #endif
 	const UE4CodeGen_Private::FFloatPropertyParams Z_Construct_UClass_ASignedDistanceFieldBaker_Statics::NewProp_VolumeIncreasePercent = { "VolumeIncreasePercent", nullptr, (EPropertyFlags)0x0010000000000005, UE4CodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ASignedDistanceFieldBaker, VolumeIncreasePercent), METADATA_PARAMS(Z_Construct_UClass_ASignedDistanceFieldBaker_Statics::NewProp_VolumeIncreasePercent_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ASignedDistanceFieldBaker_Statics::NewProp_VolumeIncreasePercent_MetaData)) };
 #if WITH_METADATA
-	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ASignedDistanceFieldBaker_Statics::NewProp_VolumeTextureSize_MetaData[] = {
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ASignedDistanceFieldBaker_Statics::NewProp_VolumeTextureTileX_MetaData[] = {
 		{ "Category", "SDF" },
 		{ "ModuleRelativePath", "Public/SignedDistanceFieldBaker.h" },
 	};
 #endif
-	const UE4CodeGen_Private::FStructPropertyParams Z_Construct_UClass_ASignedDistanceFieldBaker_Statics::NewProp_VolumeTextureSize = { "VolumeTextureSize", nullptr, (EPropertyFlags)0x0010000000000005, UE4CodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ASignedDistanceFieldBaker, VolumeTextureSize), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(Z_Construct_UClass_ASignedDistanceFieldBaker_Statics::NewProp_VolumeTextureSize_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ASignedDistanceFieldBaker_Statics::NewProp_VolumeTextureSize_MetaData)) };
+	const UE4CodeGen_Private::FIntPropertyParams Z_Construct_UClass_ASignedDistanceFieldBaker_Statics::NewProp_VolumeTextureTileX = { "VolumeTextureTileX", nullptr, (EPropertyFlags)0x0010000000000005, UE4CodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ASignedDistanceFieldBaker, VolumeTextureTileX), METADATA_PARAMS(Z_Construct_UClass_ASignedDistanceFieldBaker_Statics::NewProp_VolumeTextureTileX_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ASignedDistanceFieldBaker_Statics::NewProp_VolumeTextureTileX_MetaData)) };
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ASignedDistanceFieldBaker_Statics::NewProp_VolumeTextureTileY_MetaData[] = {
+		{ "Category", "SDF" },
+		{ "ModuleRelativePath", "Public/SignedDistanceFieldBaker.h" },
+	};
+#endif
+	const UE4CodeGen_Private::FIntPropertyParams Z_Construct_UClass_ASignedDistanceFieldBaker_Statics::NewProp_VolumeTextureTileY = { "VolumeTextureTileY", nullptr, (EPropertyFlags)0x0010000000000005, UE4CodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ASignedDistanceFieldBaker, VolumeTextureTileY), METADATA_PARAMS(Z_Construct_UClass_ASignedDistanceFieldBaker_Statics::NewProp_VolumeTextureTileY_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ASignedDistanceFieldBaker_Statics::NewProp_VolumeTextureTileY_MetaData)) };
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ASignedDistanceFieldBaker_Statics::NewProp_VolumeTextureTileZ_MetaData[] = {
+		{ "Category", "SDF" },
+		{ "ModuleRelativePath", "Public/SignedDistanceFieldBaker.h" },
+	};
+#endif
+	const UE4CodeGen_Private::FIntPropertyParams Z_Construct_UClass_ASignedDistanceFieldBaker_Statics::NewProp_VolumeTextureTileZ = { "VolumeTextureTileZ", nullptr, (EPropertyFlags)0x0010000000000005, UE4CodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ASignedDistanceFieldBaker, VolumeTextureTileZ), METADATA_PARAMS(Z_Construct_UClass_ASignedDistanceFieldBaker_Statics::NewProp_VolumeTextureTileZ_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ASignedDistanceFieldBaker_Statics::NewProp_VolumeTextureTileZ_MetaData)) };
 	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_ASignedDistanceFieldBaker_Statics::PropPointers[] = {
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ASignedDistanceFieldBaker_Statics::NewProp_DrawDebugInfo,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ASignedDistanceFieldBaker_Statics::NewProp_UseTickInEditor,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ASignedDistanceFieldBaker_Statics::NewProp_DebugLineWidth,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ASignedDistanceFieldBaker_Statics::NewProp_VoxelSize,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ASignedDistanceFieldBaker_Statics::NewProp_VolumeIncreasePercent,
-		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ASignedDistanceFieldBaker_Statics::NewProp_VolumeTextureSize,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ASignedDistanceFieldBaker_Statics::NewProp_VolumeTextureTileX,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ASignedDistanceFieldBaker_Statics::NewProp_VolumeTextureTileY,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ASignedDistanceFieldBaker_Statics::NewProp_VolumeTextureTileZ,
 	};
 	const FCppClassTypeInfoStatic Z_Construct_UClass_ASignedDistanceFieldBaker_Statics::StaticCppClassTypeInfo = {
 		TCppClassTypeTraits<ASignedDistanceFieldBaker>::IsAbstract,
@@ -206,7 +229,7 @@ void EmptyLinkFunctionForGeneratedCodeSignedDistanceFieldBaker() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(ASignedDistanceFieldBaker, 228506175);
+	IMPLEMENT_CLASS(ASignedDistanceFieldBaker, 206690050);
 	template<> SDFBAKER_API UClass* StaticClass<ASignedDistanceFieldBaker>()
 	{
 		return ASignedDistanceFieldBaker::StaticClass();

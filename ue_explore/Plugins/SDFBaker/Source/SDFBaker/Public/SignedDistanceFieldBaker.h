@@ -30,7 +30,13 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "SDF")
 	float VolumeIncreasePercent = 0.2f;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "SDF")
-	FVector VolumeTextureSize = FVector(10,10,10);
+		int32 VolumeTextureTileX = 10;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "SDF")
+		int32 VolumeTextureTileY = 10;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "SDF")
+		int32 VolumeTextureTileZ = 10;
+
+	class UVolumeTexture* SDFVolumeTexture = nullptr;
 
 public:
 	ASignedDistanceFieldBaker();
@@ -52,5 +58,9 @@ private:
 	void VisualizeVolumeVoxel();
 	void ExtractMeshInfo(class UStaticMesh* staticMesh,TArray<FVertex>& vertices,TArray<FTriangle>& triangles);
 
-	// void GenVolumeTexture(float[][][] sdf);
+	UTexture2D* CreateSliceTexture(int32 width,int32 height,TArray<FColor>& colors);
+	UVolumeTexture* CreateVolumeTexture(int32 tileX, int32 tileY, int32 tileZ, UTexture2D* sourceTex);
+
+	// package default  =  "/Game/"
+	void SaveVolumeTexture(UVolumeTexture* volumeTexture,FString packageName);
 };

@@ -21,7 +21,7 @@ void EmptyLinkFunctionForGeneratedCodeSDFBaker_init() {}
 				nullptr,
 				0,
 				PKG_CompiledIn | 0x00000000,
-				0x8E26E159,
+				0x02F56AD4,
 				0x3AD9D75C,
 				METADATA_PARAMS(nullptr, 0)
 			};

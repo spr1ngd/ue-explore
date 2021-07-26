@@ -1,2 +1,0 @@
-D:\Project Files\Unreal\ue_explore\ue_explore\Plugins\SDFBaker\Intermediate\Build\Win64\UE4Editor\Development\SDFBaker\Definitions.SDFBaker.h
-D:\Project Files\Unreal\ue_explore\ue_explore\Plugins\SDFBaker\Source\SDFBaker\Public\SDFBaker.h
