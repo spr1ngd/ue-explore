@@ -3,8 +3,8 @@
 	{
 		"Module.SDFBaker.cpp.obj": [
 			"SDFBaker.cpp.obj",
-			"SignedDistanceFieldCommon.cpp.obj",
-			"SignedDistanceFieldBaker.cpp.obj"
+			"SignedDistanceFieldBaker.cpp.obj",
+			"SignedDistanceFieldCommon.cpp.obj"
 		],
 		"Module.SDFBaker.gen.cpp.obj": [
 			"SDFBaker.init.gen.cpp.obj",

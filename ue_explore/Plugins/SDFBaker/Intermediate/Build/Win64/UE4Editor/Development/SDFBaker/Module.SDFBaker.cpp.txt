@@ -1,5 +1,3 @@
-D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Plugins\SDFBaker\Intermediate\Build\Win64\UE4Editor\Development\SDFBaker\Definitions.SDFBaker.h
-D:/Projects/Unreal/ue-explore/ue-explore/ue_explore/Plugins/SDFBaker/Source/SDFBaker/Private/SDFBaker.cpp
-D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Plugins\SDFBaker\Source\SDFBaker\Public\SDFBaker.h
-D:/Projects/Unreal/ue-explore/ue-explore/ue_explore/Plugins/SDFBaker/Source/SDFBaker/Private/SignedDistanceFieldCommon.cpp
-D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Plugins\SDFBaker\Source\SDFBaker\Public\SignedDistanceFieldCommon.h
+D:\Project Files\Unreal\ue_explore\ue_explore\Plugins\SDFBaker\Intermediate\Build\Win64\UE4Editor\Development\SDFBaker\Definitions.SDFBaker.h
+D:/Project Files/Unreal/ue_explore/ue_explore/Plugins/SDFBaker/Source/SDFBaker/Private/SDFBaker.cpp
+D:\Project Files\Unreal\ue_explore\ue_explore\Plugins\SDFBaker\Source\SDFBaker\Public\SDFBaker.h

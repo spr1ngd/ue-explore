@@ -33,7 +33,7 @@
 /NODEFAULTLIB:"LIBCD"
 /NODEFAULTLIB:"LIBCPD"
 /FUNCTIONPADMIN
-"D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Intermediate\Build\Win64\ue_exploreEditor\Development\Engine\SharedPCH.Engine.NonOptimized.ShadowErrors.h.obj"
+"D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Intermediate\Build\Win64\ue_exploreEditor\Development\UnrealEd\SharedPCH.UnrealEd.NonOptimized.ShadowErrors.h.obj"
 "D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Plugins\SDFBaker\Intermediate\Build\Win64\UE4Editor\Development\SDFBaker\SignedDistanceFieldBaker.cpp.obj"
 "D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Plugins\SDFBaker\Intermediate\Build\Win64\UE4Editor\Development\SDFBaker\Module.SDFBaker.cpp.obj"
 "D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Plugins\SDFBaker\Intermediate\Build\Win64\UE4Editor\Development\SDFBaker\Module.SDFBaker.gen.cpp.obj"
@@ -42,6 +42,7 @@
 "D:\Program Files\Unreals\4.26.1\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Development\Engine\UE4Editor-Engine.lib"
 "D:\Program Files\Unreals\4.26.1\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Development\Slate\UE4Editor-Slate.lib"
 "D:\Program Files\Unreals\4.26.1\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Development\SlateCore\UE4Editor-SlateCore.lib"
+"D:\Program Files\Unreals\4.26.1\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Development\UnrealEd\UE4Editor-UnrealEd.lib"
 "D:\Program Files\Unreals\4.26.1\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Development\Core\UE4Editor-Core.lib"
 "delayimp.lib"
 "wininet.lib"

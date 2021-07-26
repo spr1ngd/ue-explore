@@ -115,7 +115,7 @@ float ASignedDistanceFieldBaker::CalcSDF(FVector o, TArray<FVertex> vertices)
 	return minT;
 }
 
-void ASignedDistanceFieldBaker::CalcSDF(TArray<FTriangle> triangles)
+void ASignedDistanceFieldBaker::CalcSDF(FVector o, TArray<FTriangle> triangles)
 {
 
 }

@@ -53,7 +53,7 @@ public:
 private:
 
 	float CalcSDF(FVector o ,TArray<class FVertex> vertices);
-	void CalcSDF(TArray<class FTriangle> triangles);
+	void CalcSDF(FVector o ,TArray<class FTriangle> triangles);
 
 	void VisualizeVolumeVoxel();
 	void ExtractMeshInfo(class UStaticMesh* staticMesh,TArray<FVertex>& vertices,TArray<FTriangle>& triangles);
