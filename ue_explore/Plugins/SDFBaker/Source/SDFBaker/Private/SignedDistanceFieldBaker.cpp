@@ -11,6 +11,8 @@
 #include "SignedDistanceFieldCommon.h"
 #include "AssetRegistry/AssetRegistryModule.h"
 #include "FileHelpers.h"
+#include "Engine/StaticMesh.h"
+#include "SignedDistanceFieldLibrary.h"
 
 ASignedDistanceFieldBaker::ASignedDistanceFieldBaker()
 {
@@ -54,7 +56,7 @@ void ASignedDistanceFieldBaker::VisualizeVolume()
 	// get mesh vertices and triangles
 	TArray<FVertex> vertices;
 	TArray<FTriangle> triangles;
-	ExtractMeshInfo(SM, vertices, triangles);
+	USignedDistanceFieldLibrary::ExtractMeshInfo(SMC, vertices, triangles);
 
 	FBoxSphereBounds bounds = SMC->Bounds;
 	FBox box = bounds.GetBox();
@@ -83,7 +85,7 @@ void ASignedDistanceFieldBaker::VisualizeVolume()
 				FVector voxelExtent = (voxelMax - voxelMin) * 0.5f;
 				if (this->DrawDebugInfo)
 					DrawDebugBox(world, voxelCenter, voxelExtent, FQuat::Identity, FColor::Red, false, 0.0f, 0, this->DebugLineWidth);
-				float minT = this->CalcSDF(voxelCenter, vertices);
+				float minT = this->CalcSDF(voxelCenter, triangles);
 				minT /= 250;
 				FColor color = FLinearColor(minT,minT,minT).ToFColor(false);
 				sliceColors.Push(color);
@@ -109,15 +111,20 @@ float ASignedDistanceFieldBaker::CalcSDF(FVector o, TArray<FVertex> vertices)
 {
 	float minT = 99999999.9f;
 	for (int32 i = 0; i < vertices.Num(); i++) {
-		FVertex vertex = vertices[i];
+		FVertex& vertex = vertices[i];
 		minT = FMath::Min(minT,FVector::Distance(vertex.Position,o));
 	}
 	return minT;
 }
 
-void ASignedDistanceFieldBaker::CalcSDF(FVector o, TArray<FTriangle> triangles)
+float ASignedDistanceFieldBaker::CalcSDF(FVector o, TArray<FTriangle> triangles)
 {
-
+	float minT = 99999999.0f;
+	for (int32 i = 0; i < triangles.Num(); i++) {
+		FTriangle& triangle = triangles[i];
+		minT = FMath::Min(minT,FMath::Abs(triangle.ClosestDistance(o)));
+	}
+	return minT;
 }
 
 void ASignedDistanceFieldBaker::ExtractMeshInfo(UStaticMesh* staticMesh, TArray<FVertex>& vertices, TArray<FTriangle>& triangles)
