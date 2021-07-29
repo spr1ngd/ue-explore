@@ -7,6 +7,7 @@
 /IGNORE:4221
 /NODEFAULTLIB
 "D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Intermediate\Build\Win64\ue_exploreEditor\Development\UnrealEd\SharedPCH.UnrealEd.NonOptimized.ShadowErrors.h.obj"
+"D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Plugins\SDFBaker\Intermediate\Build\Win64\UE4Editor\Development\SDFBaker\SignedDistanceFieldBaker.cpp.obj"
 "D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Plugins\SDFBaker\Intermediate\Build\Win64\UE4Editor\Development\SDFBaker\LinearAlgebraActor.cpp.obj"
 "D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Plugins\SDFBaker\Intermediate\Build\Win64\UE4Editor\Development\SDFBaker\Module.SDFBaker.cpp.obj"
 "D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Plugins\SDFBaker\Intermediate\Build\Win64\UE4Editor\Development\SDFBaker\Module.SDFBaker.gen.cpp.obj"

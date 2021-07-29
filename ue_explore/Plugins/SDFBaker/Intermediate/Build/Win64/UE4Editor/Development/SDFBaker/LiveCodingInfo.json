@@ -3,9 +3,9 @@
 	{
 		"Module.SDFBaker.cpp.obj": [
 			"SDFBaker.cpp.obj",
+			"SignedDistanceFieldBaker.cpp.obj",
 			"SignedDistanceFieldCommon.cpp.obj",
 			"SignedDistanceFieldLibrary.cpp.obj",
-			"SignedDistanceFieldBaker.cpp.obj",
 			"LinearAlgebraActor.cpp.obj"
 		],
 		"Module.SDFBaker.gen.cpp.obj": [
