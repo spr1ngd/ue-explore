@@ -56,7 +56,6 @@ private:
 	float CalcSDF(FVector o ,TArray<class FTriangle> triangles);
 
 	void VisualizeVolumeVoxel();
-	void ExtractMeshInfo(class UStaticMesh* staticMesh,TArray<class FVertex>& vertices,TArray<class FTriangle>& triangles);
 
 	UTexture2D* CreateSliceTexture(int32 width,int32 height,TArray<FColor>& colors);
 	UVolumeTexture* CreateVolumeTexture(int32 tileX, int32 tileY, int32 tileZ, UTexture2D* sourceTex);

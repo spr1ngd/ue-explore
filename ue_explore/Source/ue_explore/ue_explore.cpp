@@ -2,5 +2,17 @@
 
 #include "ue_explore.h"
 #include "Modules/ModuleManager.h"
+#include "Misc/Paths.h"
 
-IMPLEMENT_PRIMARY_GAME_MODULE( FDefaultGameModuleImpl, ue_explore, "ue_explore" );
+void Fue_exploreModule::StartupModule()
+{
+	FString shaderDirectory = FPaths::Combine(FPaths::ProjectDir(),TEXT("Shaders"));
+	AddShaderSourceDirectoryMapping("/cginc",shaderDirectory);
+}
+
+void Fue_exploreModule::ShutdownModule()
+{
+
+}
+
+IMPLEMENT_PRIMARY_GAME_MODULE(Fue_exploreModule, ue_explore, "ue_explore");

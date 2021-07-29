@@ -1,0 +1,23 @@
+// ----2d sdf----
+
+float sdCircle(float2 uv,float2 pos,float radius)
+{
+    return distance(uv,pos) - radius;
+}
+
+// ----2d sdf----
+
+
+// ----3d sdf----
+
+float sdSphere(float3 pos,float radius)
+{
+
+}
+
+// ----3d sdf----
+
+float4 raymarch(float3 ro,float3 rd)
+{
+
+}

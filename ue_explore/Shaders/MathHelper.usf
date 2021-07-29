@@ -1,0 +1,15 @@
+
+void rayBox(float3 ro,float3 rd,float3 boundMin,float3 boundMax,out float3 minT,out float3 maxT)
+{
+    
+}
+
+void raySphere()
+{
+
+}
+
+void rayPlane()
+{
+
+}

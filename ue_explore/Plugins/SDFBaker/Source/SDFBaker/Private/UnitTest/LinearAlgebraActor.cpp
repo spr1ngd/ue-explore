@@ -32,5 +32,7 @@ void ALinearAlgebraActor::DrawClosestDistance(UStaticMeshComponent* SMC, FVector
 
 void ALinearAlgebraActor::DrawLine(FVector start, FVector end, FColor color)
 {
+	DrawDebugSphere(this->GetWorld(),start,10.0f,8,color,false,0.0f,0,1.0f);
 	DrawDebugLine(this->GetWorld(),start,end, color,false,0.0f,0,1.0f);
+	DrawDebugSphere(this->GetWorld(), end,10.0f,8,color,false,0.0f,0,1.0f);
 }

@@ -1,0 +1,8 @@
+
+// -------- test --------
+float3 Blend(float3 a,float3 b,float alpha)
+{   
+    return lerp(a,b,alpha);
+}
+
+// ----------------------

@@ -75,3 +75,5 @@ DerivedDataCache/*
 /ue_explore/Binaries/Win64
 /ue_explore/Intermediate
 /ue_explore/Saved
+/ue_explore/Plugins/MathLib/Intermediate/Build/Win64/UE4Editor/Development/MathLib
+/ue_explore/Plugins/MathLib/Binaries/Win64

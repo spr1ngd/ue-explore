@@ -51,9 +51,6 @@ void ASignedDistanceFieldBaker::VisualizeVolume()
 	UWorld* world = this->GetWorld();
 
 	UStaticMeshComponent* SMC = this->GetStaticMeshComponent();
-	UStaticMesh* SM = SMC->GetStaticMesh();
-
-	// get mesh vertices and triangles
 	TArray<FVertex> vertices;
 	TArray<FTriangle> triangles;
 	USignedDistanceFieldLibrary::ExtractMeshInfo(SMC, vertices, triangles);
@@ -75,8 +72,9 @@ void ASignedDistanceFieldBaker::VisualizeVolume()
 		size.Y / VolumeTextureTileY,
 		size.Z / VolumeTextureTileZ);
 
+	float maxT = -9999999.9f;
 	TArray<FColor> sliceColors;
-	for (float z = size.Z; z >=0; z -= voxelSize.Z) {
+	for (float z = size.Z - voxelSize.Z; z >= 0; z -= voxelSize.Z) { // ◊¢“‚z÷·À≥–Ú
 		for (float y = 0.0f; y < size.Y; y += voxelSize.Y) {
 			for (float x = 0.0f; x < size.X; x += voxelSize.X) {
 				FVector voxelMin = min + FVector(x, y, z);
@@ -86,7 +84,7 @@ void ASignedDistanceFieldBaker::VisualizeVolume()
 				if (this->DrawDebugInfo)
 					DrawDebugBox(world, voxelCenter, voxelExtent, FQuat::Identity, FColor::Red, false, 0.0f, 0, this->DebugLineWidth);
 				float minT = this->CalcSDF(voxelCenter, triangles);
-				minT /= 250;
+				minT = minT >= 0.0f ? 1.0f : 0.0f;
 				FColor color = FLinearColor(minT,minT,minT).ToFColor(false);
 				sliceColors.Push(color);
 			}
@@ -120,29 +118,16 @@ float ASignedDistanceFieldBaker::CalcSDF(FVector o, TArray<FVertex> vertices)
 float ASignedDistanceFieldBaker::CalcSDF(FVector o, TArray<FTriangle> triangles)
 {
 	float minT = 99999999.0f;
+	float sign = 1.0f;
 	for (int32 i = 0; i < triangles.Num(); i++) {
 		FTriangle& triangle = triangles[i];
-		minT = FMath::Min(minT,FMath::Abs(triangle.ClosestDistance(o)));
-	}
-	return minT;
-}
-
-void ASignedDistanceFieldBaker::ExtractMeshInfo(UStaticMesh* staticMesh, TArray<FVertex>& vertices, TArray<FTriangle>& triangles)
-{
-	if (nullptr == staticMesh && staticMesh->RenderData->LODResources.Num() <= 0)
-		return;
-	FStaticMeshLODResources* res = &staticMesh->RenderData->LODResources[0];
-	FStaticMeshVertexBuffers* vbo = &res->VertexBuffers;
-	FPositionVertexBuffer* vertexBuffer = &vbo->PositionVertexBuffer;
-	if (vertexBuffer) {
-		int32 num = vertexBuffer->GetNumVertices();
-		for (int32 index = 0; index < num; index++) {
-			FVector positionOS = vertexBuffer->VertexPosition(index);
-			vertices.Add(FVertex(positionOS));
+		float closestDistance = triangle.ClosestDistance(o);
+		if (FMath::Abs(closestDistance) < minT) {
+			sign = FMath::Sign<float>(closestDistance);
+			minT = FMath::Abs(closestDistance);
 		}
 	}
-	FRawStaticIndexBuffer* ibo = &res->IndexBuffer;
-	// get triangle data
+	return minT * sign;
 }
 
 UTexture2D* ASignedDistanceFieldBaker::CreateSliceTexture(int32 width, int32 height, TArray<FColor>& colors)
