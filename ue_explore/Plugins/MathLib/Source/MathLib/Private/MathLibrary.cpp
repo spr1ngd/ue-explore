@@ -1,17 +1,13 @@
 
 #include "MathLibrary.h"
 
-void S::FMathLibrary::Convex(TArray<FVector>& points, FVector pN,TArray<FVector>& convexPoints)
+void S::FMathLibrary::Convex(TArray<FVector>& points,TArray<FVector>& convexPoints)
 {
 	FVector stdN = FVector(0, 0, 1);
-	FMatrix R = FMatrix::Identity; // FMathLibrary::MatrixFromAToB(stdN, pN);
-
-	// spr1ngd : TODO: transform input points , please check MatrixFromAToB is correct.
-
 	FVector yMin(0, FLT_MAX, 0);
 	FVector yMax(0, FLT_MIN, 0);
 	for (int32 i = 0; i < points.Num(); i++) {
-		FVector point = R.TransformPosition(points[i]);
+		FVector point = points[i];
 		if (point.Y < yMin.Y) {
 			yMin = point;
 		}
@@ -21,9 +17,8 @@ void S::FMathLibrary::Convex(TArray<FVector>& points, FVector pN,TArray<FVector>
 	}
 	points.Remove(yMin);
 	points.Remove(yMax);
-	float rightSlotIndex = convexPoints.Insert(yMin, 0);
-	float leftSlotIndex = convexPoints.Insert(yMax, 1);
-	FMathLibrary::Convex_Internal(stdN, yMin, yMax, points, convexPoints, rightSlotIndex, leftSlotIndex);
+	FMathLibrary::Convex_FarthestInSection(stdN, yMin, yMax, points, convexPoints);
+	FMathLibrary::Convex_FarthestInSection(stdN, yMax, yMin, points, convexPoints);
 }
 
 FMatrix S::FMathLibrary::MatrixFromAToB(FVector A, FVector B)
@@ -51,49 +46,66 @@ float S::FMathLibrary::DistanceToVector(FVector p, FVector o, FVector dir)
 
 #pragma region privates
 
-void S::FMathLibrary::Convex_Internal(
-	FVector stdN, FVector begin, FVector end, TArray<FVector> points,
-	TArray<FVector>& convexPoints, int32 rightSlotIndex,int32 leftSlotIndex)
+void S::FMathLibrary::Convex_FarthestInSection(FVector stdN, FVector begin, FVector end, TArray<FVector>& points, TArray<FVector>& convexPoints)
 {
-	FVector splitDir = (end - begin).GetSafeNormal();
-	float leftMaxDist = FLT_MIN;
-	FVector left(0, 0, 0);
-	TArray<FVector> leftSections;
-	float rightMaxDist = FLT_MIN;
-	FVector right(0, 0, 0);
-	TArray<FVector> rightSections;
+	if (points.Num() <= 0) {
+		convexPoints.Add(end);
+		return;
+	}
 
+	FVector splitDir = (end - begin).GetSafeNormal();
+
+	float maxDist = FLT_MIN;
+	FVector farthestPoint;
 	for (int32 i = 0; i < points.Num(); i++) {
-		FVector point = points[i];
+		FVector& point = points[i];
 		FVector dir = point - begin;
 		FVector N = FVector::CrossProduct(splitDir, dir);
-		float dist = FMathLibrary::DistanceToVector(point, begin, splitDir);
 		float sign = FMath::Sign<float>(FVector::DotProduct(stdN, N));
 		if (sign > 0) {
-			rightSections.Add(point);
-			if (dist > rightMaxDist) {
-				rightMaxDist = dist;
-				right = point;
-			}
-		}
-		else if (sign < 0) {
-			leftSections.Add(point);
-			if (dist > leftMaxDist) {
-				leftMaxDist = dist;
-				left = point;
+			float dist = FMathLibrary::DistanceToVector(point, begin, splitDir);
+			if (dist > maxDist) {
+				maxDist = dist;
+				farthestPoint = point;
 			}
 		}
 	}
-	if (rightMaxDist > FLT_MIN) {
-		rightSections.Remove(right);
-		rightSlotIndex = convexPoints.Insert(right, rightSlotIndex);
-		FMathLibrary::Convex_Internal(stdN, begin, right, rightSections, convexPoints, rightSlotIndex, leftSlotIndex);
+	if (maxDist == FLT_MIN)
+	{
+		convexPoints.Add(end);
+		return;
 	}
-	if (leftMaxDist > FLT_MIN) {
-		leftSections.Remove(left);
-		leftSlotIndex = convexPoints.Insert(left, leftSlotIndex);
-		FMathLibrary::Convex_Internal(stdN, end, left, leftSections, convexPoints, rightSlotIndex, leftSlotIndex);
+	points.Remove(farthestPoint);
+
+	FVector edgeDir0 = farthestPoint - begin;
+	TArray<FVector> section0;
+	FVector edgeDir1 = end - farthestPoint;
+	TArray<FVector> section1;
+	for (int32 i = 0; i < points.Num(); i++) {
+		FVector& point = points[i];
+		bool passed = false;
+		// edge 0
+		{
+			FVector dir = point - begin;
+			FVector N = FVector::CrossProduct(edgeDir0, dir);
+			float sign = FMath::Sign<float>(FVector::DotProduct(stdN, N));
+			if (sign > 0) {
+				section0.Add(point);
+				passed = true;
+			}
+		}
+		// edge 1
+		{
+			if( passed )
+				continue;
+			FVector dir = point - farthestPoint;
+			FVector N = FVector::CrossProduct(edgeDir1, dir);
+			float sign = FMath::Sign<float>(FVector::DotProduct(stdN, N));
+			if (sign > 0) section1.Add(point);
+		}
 	}
+	FMathLibrary::Convex_FarthestInSection(stdN, begin, farthestPoint, section0, convexPoints);
+	FMathLibrary::Convex_FarthestInSection(stdN, farthestPoint, end, section1, convexPoints);
 }
 
 #pragma endregion privates

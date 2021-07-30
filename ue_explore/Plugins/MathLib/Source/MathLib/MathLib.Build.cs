@@ -5,8 +5,9 @@ using UnrealBuildTool;
 public class MathLib : ModuleRules
 {
 	public MathLib(ReadOnlyTargetRules Target) : base(Target)
-	{
-		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
+    {
+        OptimizeCode = CodeOptimization.Never;
+        PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 		
 		PublicIncludePaths.AddRange(
 			new string[] {
