@@ -1,0 +1,37 @@
+
+#include "MathCommon.usf"
+
+bool rayBox(float3 ro,float3 rd,float3 boundMin,float3 boundMax,out float minDist,out float maxDist)
+{
+    float3 inv_rd = 1. / rd;
+    float3 t0 = (boundMin - ro) * inv_rd;
+    float3 t1 = (boundMax - ro) * inv_rd;
+    float3 tmin = min(t0,t1);
+    float3 tmax = max(t0,t1);
+    float ta = maxInFloat3(tmin);
+    float tb = minInFloat3(tmax);
+    bool intersection = ta < tb;
+    if( intersection ){
+        minDist = max(0,ta);
+        maxDist = max(0,tb);
+    }
+    return intersection;
+}
+
+bool raySphere(float3 ro,float3 rd,float3 center,float radius,out float minDist,out float maxDist)
+{
+    float3 oc = center - ro;
+    float l = dot(oc,rd);
+    float d = sqrt(dot(oc,oc) - l*l);
+    if( d > radius )
+        return false;
+    float hl = sqrt(radius*radius - d*d);
+    minDist = l - hl;
+    maxDist = l + hl;
+    return true;
+}
+
+bool rayPlane(float3 ro,float3 rd,float3 p,float3 pn,out float dist)
+{
+    
+}

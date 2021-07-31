@@ -11,4 +11,10 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		TArray<FVector> Convex(TArray<FVector> points,FVector o,FVector on);
+
+	// intersection
+	UFUNCTION(BlueprintCallable)
+	bool RayBox(FVector ro,FVector rd,FVector boundMin,FVector boundMax,float& minDist,float& maxDist);
+	UFUNCTION(BlueprintCallable)
+	bool RaySphere(FVector ro,FVector rd,FVector center,float radius,float& minDist,float& maxDist);
 };

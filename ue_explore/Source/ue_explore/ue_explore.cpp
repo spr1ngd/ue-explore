@@ -6,7 +6,7 @@
 
 void Fue_exploreModule::StartupModule()
 {
-	FString shaderDirectory = FPaths::Combine(FPaths::ProjectDir(),TEXT("Shaders"));
+	FString shaderDirectory = FPaths::Combine(FPaths::ProjectDir(),TEXT("CGIncludes"));
 	AddShaderSourceDirectoryMapping("/cginc",shaderDirectory);
 }
 

@@ -21,7 +21,7 @@ void EmptyLinkFunctionForGeneratedCodeMathLib_init() {}
 				nullptr,
 				0,
 				PKG_CompiledIn | 0x00000000,
-				0xC35F6EFE,
+				0x06EE8522,
 				0xFE088943,
 				METADATA_PARAMS(nullptr, 0)
 			};

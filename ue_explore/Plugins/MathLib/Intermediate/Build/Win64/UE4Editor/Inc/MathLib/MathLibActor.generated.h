@@ -17,11 +17,15 @@ struct FVector;
 #define ue_explore_Plugins_MathLib_Source_MathLib_Public_UnitTest_MathLibActor_h_8_SPARSE_DATA
 #define ue_explore_Plugins_MathLib_Source_MathLib_Public_UnitTest_MathLibActor_h_8_RPC_WRAPPERS \
  \
+	DECLARE_FUNCTION(execRaySphere); \
+	DECLARE_FUNCTION(execRayBox); \
 	DECLARE_FUNCTION(execConvex);
 
 
 #define ue_explore_Plugins_MathLib_Source_MathLib_Public_UnitTest_MathLibActor_h_8_RPC_WRAPPERS_NO_PURE_DECLS \
  \
+	DECLARE_FUNCTION(execRaySphere); \
+	DECLARE_FUNCTION(execRayBox); \
 	DECLARE_FUNCTION(execConvex);
 
 

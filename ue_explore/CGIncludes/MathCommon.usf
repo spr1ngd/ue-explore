@@ -1,0 +1,10 @@
+
+float maxInFloat3(float3 value)
+{
+    return max(max(value.x,value.y),value.z);
+}
+
+float minInFloat3(float3 value)
+{
+    return min(min(value.x,value.y),value.z);
+}
