@@ -33,3 +33,20 @@ float3 sdfScene(float3 ro,float3 rd,float maxDist,float step)
         float dist = sdSphere(sp,spherePos,sphereRadius);
     }
 }
+
+// raymarch tex3d
+float raymarch_tex3d(Texture3D DistanceField,SamplerState DistanceFieldSampler,float3 boundMin,float3 boundMax,float3 ro,float3 re,float step)
+{
+    float result;
+    float DIST = distance(ro,re);
+    float3 rd = normalize(re - ro);
+    float steps = DIST / step;
+    for(float dist = 0;dist < DIST;dist += step)
+    {
+        float3 sp = ro + rd * dist;
+        float3 t = (sp - boundMin) / (boundMax - boundMin);
+        float d = DistanceField.SampleLevel(DistanceFieldSampler,t,0).r;
+        result += d / steps;
+    }
+    return result;
+}

@@ -1,7 +1,0 @@
-D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Plugins\SDFBaker\Intermediate\Build\Win64\UE4Editor\Development\SDFBaker\Definitions.SDFBaker.h
-D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Plugins\SDFBaker\Source\SDFBaker\Public\UnitTest/LinearAlgebraActor.h
-D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Plugins\SDFBaker\Intermediate\Build\Win64\UE4Editor\Inc\SDFBaker\LinearAlgebraActor.generated.h
-D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Plugins\SDFBaker\Source\SDFBaker\Public\SignedDistanceFieldCommon.h
-D:\Program Files\Unreals\4.26.1\UE_4.26\Engine\Source\Runtime\Engine\Public\DrawDebugHelpers.h
-D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Plugins\SDFBaker\Source\SDFBaker\Private\SignedDistanceFieldLibrary.h
-D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Plugins\SDFBaker\Intermediate\Build\Win64\UE4Editor\Inc\SDFBaker\SignedDistanceFieldLibrary.generated.h

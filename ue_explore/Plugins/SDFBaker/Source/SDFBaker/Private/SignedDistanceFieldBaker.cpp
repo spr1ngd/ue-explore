@@ -14,6 +14,9 @@
 #include "Engine/StaticMesh.h"
 #include "SignedDistanceFieldLibrary.h"
 
+#define BEGIN {
+#define END }
+
 ASignedDistanceFieldBaker::ASignedDistanceFieldBaker()
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -61,7 +64,7 @@ void ASignedDistanceFieldBaker::VisualizeVolume()
 	FVector volumeExtent = box.GetExtent();
 	volumeExtent *= (1 + this->VolumeIncreasePercent);
 
-	DrawDebugBox(world,volumeCenter,volumeExtent,FQuat::Identity,FColor::Green,false,0.0f,0,this->DebugLineWidth);
+	DrawDebugBox(world, volumeCenter, volumeExtent, FQuat::Identity, FColor::Green, false, 0.0f, 0, this->DebugLineWidth);
 
 	// visualize voxel 
 	FVector min = volumeCenter - volumeExtent;
@@ -74,7 +77,7 @@ void ASignedDistanceFieldBaker::VisualizeVolume()
 
 	float maxT = -9999999.9f;
 	TArray<FColor> sliceColors;
-	for (float z = size.Z - voxelSize.Z; z >= 0; z -= voxelSize.Z) { // ◊¢“‚z÷·À≥–Ú
+	for (float z = 0.0; z < size.Z; z += voxelSize.Z) {
 		for (float y = 0.0f; y < size.Y; y += voxelSize.Y) {
 			for (float x = 0.0f; x < size.X; x += voxelSize.X) {
 				FVector voxelMin = min + FVector(x, y, z);
@@ -85,7 +88,7 @@ void ASignedDistanceFieldBaker::VisualizeVolume()
 					DrawDebugBox(world, voxelCenter, voxelExtent, FQuat::Identity, FColor::Red, false, 0.0f, 0, this->DebugLineWidth);
 				float minT = this->CalcSDF(voxelCenter, triangles);
 				minT = minT >= 0.0f ? 1.0f : 0.0f;
-				FColor color = FLinearColor(minT,minT,minT).ToFColor(false);
+				FColor color = FLinearColor(minT, minT, minT).ToFColor(false);
 				sliceColors.Push(color);
 			}
 		}
