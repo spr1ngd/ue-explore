@@ -1,0 +1,5 @@
+D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Plugins\SDFBaker\Intermediate\Build\Win64\UE4Editor\Development\SDFBaker\Definitions.SDFBaker.h
+D:\Program Files\Unreals\4.26.1\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\UObject/GeneratedCppIncludes.h
+D:\Program Files\Unreals\4.26.1\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\UObject/MetaData.h
+D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Plugins\SDFBaker\Source\SDFBaker/Public/SignedDistanceFieldBaker2D.h
+D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Plugins\SDFBaker\Intermediate\Build\Win64\UE4Editor\Inc\SDFBaker\SignedDistanceFieldBaker2D.generated.h

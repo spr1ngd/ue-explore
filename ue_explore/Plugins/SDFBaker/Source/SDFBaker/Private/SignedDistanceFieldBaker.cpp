@@ -14,9 +14,6 @@
 #include "Engine/StaticMesh.h"
 #include "SignedDistanceFieldLibrary.h"
 
-#define BEGIN {
-#define END }
-
 ASignedDistanceFieldBaker::ASignedDistanceFieldBaker()
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -211,4 +208,5 @@ UVolumeTexture* ASignedDistanceFieldBaker::CreateVolumeTexture(int32 tileX, int3
 
 void ASignedDistanceFieldBaker::SaveVolumeTexture(UVolumeTexture* volumeTexture, FString packageName)
 {
+
 }

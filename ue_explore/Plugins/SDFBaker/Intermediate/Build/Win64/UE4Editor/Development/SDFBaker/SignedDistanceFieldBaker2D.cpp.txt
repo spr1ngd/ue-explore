@@ -1,0 +1,3 @@
+D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Plugins\SDFBaker\Intermediate\Build\Win64\UE4Editor\Development\SDFBaker\Definitions.SDFBaker.h
+D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Plugins\SDFBaker\Source\SDFBaker\Public\SignedDistanceFieldBaker2D.h
+D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Plugins\SDFBaker\Intermediate\Build\Win64\UE4Editor\Inc\SDFBaker\SignedDistanceFieldBaker2D.generated.h

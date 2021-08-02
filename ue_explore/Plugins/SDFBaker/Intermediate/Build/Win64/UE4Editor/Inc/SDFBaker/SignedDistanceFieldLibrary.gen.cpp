@@ -5,7 +5,7 @@
 ===========================================================================*/
 
 #include "UObject/GeneratedCppIncludes.h"
-#include "SDFBaker/Private/SignedDistanceFieldLibrary.h"
+#include "SDFBaker/Public/SignedDistanceFieldLibrary.h"
 #ifdef _MSC_VER
 #pragma warning (push)
 #pragma warning (disable : 4883)
@@ -42,7 +42,7 @@ void EmptyLinkFunctionForGeneratedCodeSignedDistanceFieldLibrary() {}
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_USignedDistanceFieldLibrary_Statics::Class_MetaDataParams[] = {
 		{ "BlueprintThreadSafe", "" },
 		{ "IncludePath", "SignedDistanceFieldLibrary.h" },
-		{ "ModuleRelativePath", "Private/SignedDistanceFieldLibrary.h" },
+		{ "ModuleRelativePath", "Public/SignedDistanceFieldLibrary.h" },
 		{ "ScriptName", "MathLibrary" },
 	};
 #endif
@@ -73,7 +73,7 @@ void EmptyLinkFunctionForGeneratedCodeSignedDistanceFieldLibrary() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(USignedDistanceFieldLibrary, 2708541300);
+	IMPLEMENT_CLASS(USignedDistanceFieldLibrary, 2504577813);
 	template<> SDFBAKER_API UClass* StaticClass<USignedDistanceFieldLibrary>()
 	{
 		return USignedDistanceFieldLibrary::StaticClass();
