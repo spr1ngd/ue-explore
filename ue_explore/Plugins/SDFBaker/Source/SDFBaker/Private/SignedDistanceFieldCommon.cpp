@@ -69,6 +69,8 @@ float FTriangle::ClosestDistance(FVector p, FVector& outIntersectionPoint)
 	float projectionDist = 0.0f;
 	FVector projectionPoint;
 	this->Project(p, projectionDist, projectionPoint);
+	if (projectionDist == FLT_MAX)
+		return FLT_MAX;
 
 	// ** 计算出p点在三边的垂直向量（指向p点）
 	FVector AP = projectionPoint - this->A.Position;
@@ -106,6 +108,9 @@ float FTriangle::ClosestDistance(FVector p, FVector& outIntersectionPoint)
 float FTriangle::ProjectionDistance(FVector p)
 {
 	FVector faceNormal = this->CalcNormal();
+	// TODO:
+	if (faceNormal.X == 0.0f && faceNormal.Y == 0.0f && faceNormal.Z == 0.0f)
+		return FLT_MAX;
 	FVector APDir;
 	float APMagnitude;
 	(p - this->A.Position).ToDirectionAndLength(APDir,APMagnitude);
@@ -136,6 +141,12 @@ bool FTriangle::InTriangle(FVector p)
 void FTriangle::Project(FVector p, float& dist, FVector& subpoint)
 {
 	FVector faceNormal = this->CalcNormal();
+	// TODO:
+	if (faceNormal.X == 0.0f && faceNormal.Y == 0.0f && faceNormal.Z == 0.0f)
+	{
+		dist = FLT_MAX;
+		return;
+	}
 	FVector APDir;
 	float APMagnitude;
 	(p - this->A.Position).ToDirectionAndLength(APDir, APMagnitude);

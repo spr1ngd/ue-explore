@@ -43,7 +43,42 @@ bool ASignedDistanceFieldBaker::ShouldTickIfViewportsOnly() const
 
 void ASignedDistanceFieldBaker::TickInEditor(float DeltaSeconds)
 {
-	VisualizeVolume();
+	UWorld* world = this->GetWorld();
+
+	UStaticMeshComponent* SMC = this->GetStaticMeshComponent();
+	TArray<FVertex> vertices;
+	TArray<FTriangle> triangles;
+	USignedDistanceFieldLibrary::ExtractMeshInfo(SMC, vertices, triangles);
+
+	FBoxSphereBounds bounds = SMC->Bounds;
+	FBox box = bounds.GetBox();
+	FVector volumeCenter = box.GetCenter();
+	FVector volumeExtent = box.GetExtent();
+	volumeExtent *= (1 + this->VolumeIncreasePercent);
+
+	DrawDebugBox(world, volumeCenter, volumeExtent, FQuat::Identity, FColor::Green, false, 0.0f, 0, this->DebugLineWidth);
+
+	// visualize voxel 
+	FVector min = volumeCenter - volumeExtent;
+	FVector max = volumeCenter + volumeExtent;
+	FVector size = volumeExtent * 2.0f;
+	FVector voxelSize = FVector(
+		size.X / VolumeTextureTileX,
+		size.Y / VolumeTextureTileY,
+		size.Z / VolumeTextureTileZ);
+
+	for (int32 z = 0; z < VolumeTextureTileZ; z++) {
+		for (int32 y = 0; y < VolumeTextureTileY; y++) {
+			for (int32 x = 0; x < VolumeTextureTileX; x++) {
+				FVector voxelMin = min + FVector(x * voxelSize.X, y * voxelSize.Y, z * voxelSize.Z);
+				FVector voxelMax = voxelMin + voxelSize;
+				FVector voxelCenter = (voxelMax + voxelMin) * 0.5f;
+				FVector voxelExtent = (voxelMax - voxelMin) * 0.5f;
+				if (this->DrawDebugInfo)
+					DrawDebugBox(world, voxelCenter, voxelExtent, FQuat::Identity, FColor::Red, false, 0.0f, 0, this->DebugLineWidth);
+			}
+		}
+	}
 }
 
 void ASignedDistanceFieldBaker::VisualizeVolume()
@@ -74,15 +109,13 @@ void ASignedDistanceFieldBaker::VisualizeVolume()
 
 	float maxT = -9999999.9f;
 	TArray<FColor> sliceColors;
-	for (float z = 0.0; z < size.Z; z += voxelSize.Z) {
-		for (float y = 0.0f; y < size.Y; y += voxelSize.Y) {
-			for (float x = 0.0f; x < size.X; x += voxelSize.X) {
-				FVector voxelMin = min + FVector(x, y, z);
+	for (int32 z = 0; z < VolumeTextureTileZ; z++) {
+		for (int32 y = 0; y < VolumeTextureTileY; y++) {
+			for (int32 x = 0; x < VolumeTextureTileX; x++) {
+				FVector voxelMin = min + FVector(x * voxelSize.X, y * voxelSize.Y , z * voxelSize.Z);
 				FVector voxelMax = voxelMin + voxelSize;
 				FVector voxelCenter = (voxelMax + voxelMin) * 0.5f;
 				FVector voxelExtent = (voxelMax - voxelMin) * 0.5f;
-				if (this->DrawDebugInfo)
-					DrawDebugBox(world, voxelCenter, voxelExtent, FQuat::Identity, FColor::Red, false, 0.0f, 0, this->DebugLineWidth);
 				float minT = this->CalcSDF(voxelCenter, triangles);
 				minT = minT >= 0.0f ? 1.0f : 0.0f;
 				FColor color = FLinearColor(minT, minT, minT).ToFColor(false);
@@ -105,7 +138,7 @@ void ASignedDistanceFieldBaker::VisualizeVolumeVoxel()
 
 }
 
-float ASignedDistanceFieldBaker::CalcSDF(FVector o, TArray<FVertex> vertices)
+float ASignedDistanceFieldBaker::CalcSDF(FVector o, TArray<FVertex>& vertices)
 {
 	float minT = 99999999.9f;
 	for (int32 i = 0; i < vertices.Num(); i++) {
@@ -115,9 +148,9 @@ float ASignedDistanceFieldBaker::CalcSDF(FVector o, TArray<FVertex> vertices)
 	return minT;
 }
 
-float ASignedDistanceFieldBaker::CalcSDF(FVector o, TArray<FTriangle> triangles)
+float ASignedDistanceFieldBaker::CalcSDF(FVector o, TArray<FTriangle>& triangles)
 {
-	float minT = 99999999.0f;
+	float minT = FLT_MAX;
 	float sign = 1.0f;
 	for (int32 i = 0; i < triangles.Num(); i++) {
 		FTriangle& triangle = triangles[i];

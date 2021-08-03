@@ -52,8 +52,8 @@ public:
 
 private:
 
-	float CalcSDF(FVector o ,TArray<class FVertex> vertices);
-	float CalcSDF(FVector o ,TArray<class FTriangle> triangles);
+	float CalcSDF(FVector o ,TArray<class FVertex>& vertices);
+	float CalcSDF(FVector o ,TArray<class FTriangle>& triangles);
 
 	void VisualizeVolumeVoxel();
 

@@ -1,0 +1,6 @@
+D:\Project Files\Unreal\ue_explore\ue_explore\Plugins\SDFBaker\Intermediate\Build\Win64\UE4Editor\Development\SDFBaker\Definitions.SDFBaker.h
+D:\Project Files\Unreal\ue_explore\ue_explore\Plugins\SDFBaker\Source\SDFBaker\Public\SignedDistanceFieldCommon.h
+D:\Project Files\UnrealEngine\UE_4.26\Engine\Source\Runtime\Engine\Classes\Kismet/KismetMathLibrary.h
+D:\Project Files\UnrealEngine\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\KismetMathLibrary.generated.h
+D:\Project Files\UnrealEngine\UE_4.26\Engine\Source\Runtime\Engine\Classes\Kismet\KismetMathLibrary.inl
+D:\Project Files\UnrealEngine\UE_4.26\Engine\Source\Runtime\Engine\Public\DrawDebugHelpers.h
