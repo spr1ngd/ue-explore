@@ -4,6 +4,10 @@
 #include "SignedDistanceFieldCommon.h"
 #include "StaticMeshResources.h"
 #include "Rendering/PositionVertexBuffer.h"
+#if WITH_EDITOR
+#include "AssetRegistry/AssetRegistryModule.h"
+#include "FileHelpers.h"
+#endif
 
 void USignedDistanceFieldLibrary::ExtractMeshInfo(UStaticMeshComponent* SMC, TArray<FVertex>& vertices, TArray<FTriangle>& triangles)
 {
@@ -32,4 +36,49 @@ void USignedDistanceFieldLibrary::ExtractMeshInfo(UStaticMeshComponent* SMC, TAr
 		int32 ci = ibo->GetIndex(i + 2);
 		triangles.Add(FTriangle(vertices[ai], vertices[bi], vertices[ci]));
 	}
+}
+
+UTexture2D* USignedDistanceFieldLibrary::CreateTexture(FString dir, FString texName, int32 width, int32 height, TArray<FColor>& colors)
+{
+#if WITH_EDITOR
+	FString sourceTexName = texName;
+	FString packageName = dir.Append(texName);
+	UPackage* package = CreatePackage(NULL, *packageName);
+	package->FullyLoad();
+	UTexture2D* NewTexture = NewObject<UTexture2D>(package, *sourceTexName, RF_Public | RF_Standalone | RF_MarkAsRootSet);
+	NewTexture->Source.Init(width, height, 1, 1, TSF_BGRA8);
+
+	uint8* MipData = NewTexture->Source.LockMip(0);
+	for (int32 y = 0; y < height; y++)
+	{
+		uint8* DestPtr = &MipData[(height - 1 - y) * width * sizeof(FColor)];
+		FColor* SrcPtr = const_cast<FColor*>(&colors[(height - 1 - y) * width]);
+		for (int32 x = 0; x < width; x++)
+		{
+			*DestPtr++ = SrcPtr->B;
+			*DestPtr++ = SrcPtr->G;
+			*DestPtr++ = SrcPtr->R;
+			if (true)
+			{
+				*DestPtr++ = SrcPtr->A;
+			}
+			else
+			{
+				*DestPtr++ = 0xFF;
+			}
+			SrcPtr++;
+		}
+	}
+	NewTexture->Source.UnlockMip(0);
+	NewTexture->SRGB = false;
+	NewTexture->PostEditChange();
+
+	FAssetRegistryModule::AssetCreated(NewTexture);
+	package->MarkPackageDirty();
+	bool success = UPackage::SavePackage(package, NewTexture, EObjectFlags::RF_Public | EObjectFlags::RF_Standalone, *packageName, GError, nullptr, true, true, SAVE_NoError);
+	FEditorFileUtils::EPromptReturnCode returnCode = FEditorFileUtils::PromptForCheckoutAndSave({ package }, false, false);
+	return NewTexture;
+#elif
+	return nullptr;
+#endif
 }

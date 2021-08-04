@@ -228,6 +228,9 @@
 /I Editor\Kismet\Public
 /I ..\Intermediate\Build\Win64\UE4Editor\Inc\ClothingSystemRuntimeInterface
 /I Runtime\ClothingSystemRuntimeInterface\Public
+/I D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Plugins\MathLib\Intermediate\Build\Win64\UE4Editor\Inc\MathLib
+/I D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Plugins\MathLib\Source
+/I D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Plugins\MathLib\Source\MathLib\Public
 /I D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Plugins\SDFBaker\Intermediate\Build\Win64\UE4Editor\Inc\SDFBaker
 /I D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Plugins\SDFBaker\Source
 /I D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Plugins\SDFBaker\Source\SDFBaker\Public

@@ -27,6 +27,7 @@ public class SDFBaker : ModuleRules
 			new string[]
 			{
 				"Core",
+                "MathLib"
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
@@ -39,7 +40,8 @@ public class SDFBaker : ModuleRules
 				"Engine",
 				"Slate",
 				"SlateCore",
-				"UnrealEd"
+				"UnrealEd",
+                "MathLib"
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);

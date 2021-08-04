@@ -14,6 +14,25 @@ private:
 	
 public:
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		int32 width = 256;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		int32 height = 256;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		float ExpandPercent = 0.0f;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		FString exportDir = "";
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		FString exportTexName = "";
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		bool DrawDebugInfo = false;
+
 	UFUNCTION(BlueprintCallable)
-	class UTexture2D* Bake(TArray<FVector> points);
+	class UTexture2D* Bake(TArray<FVector> points,FVector up);
+
+private:
+
+	float SDFPolygon2D(FVector sp,TArray<FVector>& points);
+	void BuildTriangle(TArray<FVector> points,TArray<class FTriangle>& triangles);
+	void ExtractFloatItem(float value, float& pos, float& posSign, float& pow, float& powSign);
 };

@@ -2,19 +2,21 @@
 	"RemapUnityFiles": 
 	{
 		"Module.SDFBaker.cpp.obj": [
+			"BoundingVolumeHierarchy.cpp.obj",
+			"Octree.cpp.obj",
 			"SDFBaker.cpp.obj",
-			"SignedDistanceFieldBaker2D.cpp.obj",
-			"SignedDistanceFieldLibrary.cpp.obj",
-			"LinearAlgebraActor.cpp.obj",
 			"SignedDistanceFieldBaker.cpp.obj",
-			"SignedDistanceFieldCommon.cpp.obj"
+			"SignedDistanceFieldCommon.cpp.obj",
+			"LinearAlgebraActor.cpp.obj",
+			"SignedDistanceFieldBaker2D.cpp.obj",
+			"SignedDistanceFieldLibrary.cpp.obj"
 		],
 		"Module.SDFBaker.gen.cpp.obj": [
 			"LinearAlgebraActor.gen.cpp.obj",
-			"SDFBaker.init.gen.cpp.obj",
 			"SignedDistanceFieldBaker.gen.cpp.obj",
-			"SignedDistanceFieldBaker2D.gen.cpp.obj",
-			"SignedDistanceFieldLibrary.gen.cpp.obj"
+			"SignedDistanceFieldLibrary.gen.cpp.obj",
+			"SDFBaker.init.gen.cpp.obj",
+			"SignedDistanceFieldBaker2D.gen.cpp.obj"
 		]
 	}
 }

@@ -44,6 +44,28 @@ float S::FMathLibrary::DistanceToVector(FVector p, FVector o, FVector dir)
 	return dist;
 }
 
+void S::FMathLibrary::CalcAABB(TArray<FVector> points, FVector& boundMin, FVector& boundMax)
+{
+	float minX = FLT_MAX, minY = FLT_MAX, minZ = FLT_MAX;
+	float maxX = FLT_MIN, maxY = FLT_MIN, maxZ = FLT_MIN;
+	for (int32 i = 0; i < points.Num(); i++) {
+		FVector& point = points[i];
+		minX = FMath::Min(point.X, minX);
+		minY = FMath::Min(point.Y, minY);
+		minZ = FMath::Min(point.Z, minZ);
+		maxX = FMath::Max(point.X, maxX);
+		maxY = FMath::Max(point.Y, maxY);
+		maxZ = FMath::Max(point.Z, maxZ);
+	}
+	boundMin = FVector(minX, minY, minZ);
+	boundMax = FVector(maxX, maxY, maxZ);
+}
+
+void S::FMathLibrary::CalcSphere(TArray<FVector> points, FVector& center, float radius)
+{
+
+}
+
 #pragma region privates
 
 void S::FMathLibrary::Convex_FarthestInSection(FVector stdN, FVector begin, FVector end, TArray<FVector>& points, TArray<FVector>& convexPoints)

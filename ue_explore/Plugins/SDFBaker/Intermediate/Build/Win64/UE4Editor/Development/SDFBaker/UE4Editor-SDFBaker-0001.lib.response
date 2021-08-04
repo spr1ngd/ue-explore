@@ -7,12 +7,11 @@
 /IGNORE:4221
 /NODEFAULTLIB
 "D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Intermediate\Build\Win64\ue_exploreEditor\Development\UnrealEd\SharedPCH.UnrealEd.NonOptimized.ShadowErrors.h.obj"
-"D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Plugins\SDFBaker\Intermediate\Build\Win64\UE4Editor\Development\SDFBaker\SignedDistanceFieldBaker.cpp.obj"
 "D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Plugins\SDFBaker\Intermediate\Build\Win64\UE4Editor\Development\SDFBaker\SignedDistanceFieldBaker2D.cpp.obj"
+"D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Plugins\SDFBaker\Intermediate\Build\Win64\UE4Editor\Development\SDFBaker\SignedDistanceFieldLibrary.cpp.obj"
 "D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Plugins\SDFBaker\Intermediate\Build\Win64\UE4Editor\Development\SDFBaker\Module.SDFBaker.cpp.obj"
 "D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Plugins\SDFBaker\Intermediate\Build\Win64\UE4Editor\Development\SDFBaker\SDFBaker.init.gen.cpp.obj"
 "D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Plugins\SDFBaker\Intermediate\Build\Win64\UE4Editor\Development\SDFBaker\SignedDistanceFieldBaker2D.gen.cpp.obj"
-"D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Plugins\SDFBaker\Intermediate\Build\Win64\UE4Editor\Development\SDFBaker\SignedDistanceFieldLibrary.gen.cpp.obj"
 "D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Plugins\SDFBaker\Intermediate\Build\Win64\UE4Editor\Development\SDFBaker\Module.SDFBaker.gen.cpp.obj"
 "D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Plugins\SDFBaker\Intermediate\Build\Win64\UE4Editor\Development\SDFBaker\Default.rc2.res"
 /OUT:"D:\Projects\Unreal\ue-explore\ue-explore\ue_explore\Plugins\SDFBaker\Intermediate\Build\Win64\UE4Editor\Development\SDFBaker\UE4Editor-SDFBaker-0001.lib"
