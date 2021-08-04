@@ -33,6 +33,5 @@ public:
 private:
 
 	float SDFPolygon2D(FVector sp,TArray<FVector>& points);
-	void BuildTriangle(TArray<FVector> points,TArray<class FTriangle>& triangles);
 	void ExtractFloatItem(float value, float& pos, float& posSign, float& pow, float& powSign);
 };

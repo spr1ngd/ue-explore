@@ -82,3 +82,8 @@ UTexture2D* USignedDistanceFieldLibrary::CreateTexture(FString dir, FString texN
 	return nullptr;
 #endif
 }
+
+float USignedDistanceFieldLibrary::SDFPolygon2D(FVector sp, TArray<FVector>& points)
+{
+	return 0.0f;
+}

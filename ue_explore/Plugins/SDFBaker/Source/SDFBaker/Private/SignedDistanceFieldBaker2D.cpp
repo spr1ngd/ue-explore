@@ -5,13 +5,11 @@
 #include "DrawDebugHelpers.h"
 #include "SignedDistanceFieldCommon.h"
 #include "SignedDistanceFieldLibrary.h"
+#include <time.h>
+#include "Utils/CodeProfiler.h"
 
 UTexture2D* USignedDistanceFieldBaker2D::Bake(TArray<FVector> points, FVector up)
 {
-	// build triangle
-	//TArray<FTriangle> triangles;
-	//this->BuildTriangle(points, triangles);
-
 	// construct cell grid
 	FVector center, extent;
 	S::FMathLibrary::CalcAABB(points, center, extent);
@@ -28,24 +26,24 @@ UTexture2D* USignedDistanceFieldBaker2D::Bake(TArray<FVector> points, FVector up
 	TArray<float> distance;
 	float maxDist = 0.0f;
 	TArray<FColor> sliceColors;
+
+	// 使用grid划分,grid中存储多条交线的方向，使得可以快速判定一点在多边形内，或者多边形外
+	// 求最短距离时可向周围的八个格子进行采样，判定计算最短距离
 	for (int32 y = 0; y < this->height; y++)
 	{
-		for (int32 x = 0; x < this->height; x++)
+		for (int32 x = 0; x < this->width; x++)
 		{
 			FVector sp = FVector(x * cellSize.X, y * cellSize.Y, 0.0f);
-			if (this->DrawDebugInfo) {
-				DrawDebugBox(this->GetWorld(), sp + boundMin + halfCellSize, cellSize * 0.5f, FColor::Red, true, -1.0f, 0, 100);
-			}
 			FVector cellCenter = sp + boundMin + halfCellSize;
-			if (this->DrawDebugInfo) {
-				DrawDebugSphere(this->GetWorld(), sp + boundMin, 100.0f, 16, FColor::Yellow, true, -1.0f, 0, 50.0f);
-			}
+			S::FCodeProfiler::BeginProfiler(TEXT("SDFPolygon"));
 			float closestDistance = this->SDFPolygon2D(cellCenter, points);
+			S::FCodeProfiler::EndProfiler(TEXT("SDFPolygon"), true, false);
 			maxDist = FMath::Max(maxDist,FMath::Abs(closestDistance));
 			distance.Add(closestDistance);
-			
 		}
 	}
+	S::FCodeProfiler::EndProfiler(TEXT("SDFPolygon"), false, true);
+	S::FCodeProfiler::EndProfiler(TEXT("InPolygonCheck"), false, true);
 	for (auto dist : distance)
 	{
 		// 这种形式会因为精度不够而产生效果误差
@@ -54,34 +52,12 @@ UTexture2D* USignedDistanceFieldBaker2D::Bake(TArray<FVector> points, FVector up
 		// float d = FMath::Sign(dist) * FMath::Clamp(FMath::Abs(dist), 0.0f, 1.0f);
 		FLinearColor linearColor = FLinearColor(d, d, d);
 		sliceColors.Add(linearColor.ToFColor(false));
-
-	/*	float d = dist / maxDist;
-		d = (d + 1.0f) / 2.0f;
-		float r, g, b, a;
-		this->ExtractFloatItem(d, r, g, b, a);
-		FLinearColor linearColor = FLinearColor(r, g, b, a);
-		sliceColors.Add(linearColor.ToFColor(false));*/
 	}
-	return USignedDistanceFieldLibrary::CreateTexture(this->exportDir, this->exportTexName, this->width, this->height, sliceColors);
+	UTexture2D* tex = USignedDistanceFieldLibrary::CreateTexture(this->exportDir, this->exportTexName, this->width, this->height, sliceColors);
+	return tex;
 }
 
-void USignedDistanceFieldBaker2D::BuildTriangle(TArray<FVector> points, TArray<FTriangle>& triangles)
-{
-	// points is continued point's triangle->
-	// build a convex mesh
-	if (points.Num() < 3)
-		return;
-
-	FVertex p0 = FVertex(points[0]);
-	for (int32 i = 1; i < points.Num() - 1; i++)
-	{
-		FVertex p1 = FVertex(points[i]);
-		FVertex p2 = FVertex(points[i + 1]);
-		FTriangle triangle(p0, p1, p2);
-		triangles.Add(triangle);
-	}
-}
-
+// 看看是否需要提到函数库中
 void USignedDistanceFieldBaker2D::ExtractFloatItem(float value, float& rChannel, float& gChannel, float& bChannel, float& aChannel)
 {
 	if (value == 0.0f) {
@@ -116,7 +92,6 @@ float USignedDistanceFieldBaker2D::SDFPolygon2D(FVector sp, TArray<FVector>& poi
 {
 	float dist = FLT_MAX;
 	bool inPolygon = false;
-	FVertex p0 = FVertex(points[0]);
 	for (int32 i = 0; i < points.Num(); i++) 
 	{
 		FVector a = points[i];
@@ -126,13 +101,18 @@ float USignedDistanceFieldBaker2D::SDFPolygon2D(FVector sp, TArray<FVector>& poi
 		FVector pab = ap - edge * FMath::Clamp(FVector::DotProduct(ap, edge) / FVector::DotProduct(edge, edge), 0.0f, 1.0f);
 		float d = FMath::Sqrt(FVector::DotProduct(pab, pab));
 		dist = FMath::Min(dist, d);
-		if (!inPolygon) {
-			FVector c = points[i + 2 >= points.Num() ? 1 : i + 2];
-			FVertex vb(b);
-			FVertex vc(c);
-			FTriangle tri(p0, vb, vc);
-			inPolygon = tri.InTriangle(sp);
-		}
+		//S::FCodeProfiler::BeginProfiler("InPolygonCheck");
+		//// TODO: 此部分计算速度很慢
+		//// TODO: 且此部分计算不能判定凹多边形
+		//if (!inPolygon) {
+		//	FVector c = points[i + 2 >= points.Num() ? 1 : i + 2];
+		//	FVertex p0(points[0]);
+		//	FVertex vb(b);
+		//	FVertex vc(c);
+		//	FTriangle tri(p0, vb, vc);
+		//	inPolygon = tri.InTriangle(sp);
+		//}
+		//S::FCodeProfiler::EndProfiler("InPolygonCheck",true,false);
 	}
 	return inPolygon ? -dist : dist;
 }
