@@ -44,7 +44,7 @@ float S::FMathLibrary::DistanceToVector(FVector p, FVector o, FVector dir)
 	return dist;
 }
 
-void S::FMathLibrary::CalcAABB(TArray<FVector> points, FVector& boundMin, FVector& boundMax)
+void S::FMathLibrary::CalcAABB(TArray<FVector> points, FVector& center, FVector& extent)
 {
 	float minX = FLT_MAX, minY = FLT_MAX, minZ = FLT_MAX;
 	float maxX = FLT_MIN, maxY = FLT_MIN, maxZ = FLT_MIN;
@@ -57,8 +57,10 @@ void S::FMathLibrary::CalcAABB(TArray<FVector> points, FVector& boundMin, FVecto
 		maxY = FMath::Max(point.Y, maxY);
 		maxZ = FMath::Max(point.Z, maxZ);
 	}
-	boundMin = FVector(minX, minY, minZ);
-	boundMax = FVector(maxX, maxY, maxZ);
+	FVector boundMin = FVector(minX, minY, minZ);
+	FVector boundMax = FVector(maxX, maxY, maxZ);
+	center = (boundMin + boundMax) * 0.5f;
+	extent = (boundMax - boundMin) * 0.5f;
 }
 
 void S::FMathLibrary::CalcSphere(TArray<FVector> points, FVector& center, float radius)

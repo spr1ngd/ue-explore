@@ -4,6 +4,7 @@
 
 #pragma once
 #include "CoreMinimal.h"
+#include "AccelerationStructure/2D/Grid_2DSDF.h"
 #include "SignedDistanceFieldBaker2D.generated.h"
 
 UCLASS(Blueprintable)
@@ -30,8 +31,14 @@ public:
 	UFUNCTION(BlueprintCallable)
 	class UTexture2D* Bake(TArray<FVector> points,FVector up);
 
+	S::FGrid_2DSDF* bakedGrid;
+	UFUNCTION(BlueprintCallable)
+	void ShortestDistance(FVector sp,FVector& intersection);
+
 private:
 
 	float SDFPolygon2D(FVector sp,TArray<FVector>& points);
 	void ExtractFloatItem(float value, float& pos, float& posSign, float& pow, float& powSign);
+
+	void DrawAS(struct FBox_2DSDF* root, UWorld* world);
 };

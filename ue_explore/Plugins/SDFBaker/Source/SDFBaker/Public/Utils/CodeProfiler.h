@@ -21,7 +21,7 @@ namespace S
 		float EpsilonInMillisecond() { return epsilon; }
 	};
 
-	class FCodeProfiler 
+	class SDFBAKER_API FCodeProfiler 
 	{
 	private:
 		static TMap<FName, FCodeProfilerItem*> profilers;

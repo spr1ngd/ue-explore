@@ -11,7 +11,7 @@ namespace S
 		static FMatrix MatrixFromAToB(FVector A,FVector B);
 		static float DistanceToVector(FVector p,FVector o,FVector dir);
 
-		static void CalcAABB(TArray<FVector> points, FVector& boundMin, FVector& boundMax);
+		static void CalcAABB(TArray<FVector> points, FVector& center,FVector& extent);
 		static void CalcSphere(TArray<FVector> points, FVector& center, float radius);
 
 	private:
